@@ -24,15 +24,6 @@ const saveWeddingData = (newData) => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
 };
 
-const loadGuests = () => {
-    const saved = localStorage.getItem(GUEST_KEY);
-    return saved ? JSON.parse(saved) : [];
-};
-
-const saveGuests = (guests) => {
-    localStorage.setItem(GUEST_KEY, JSON.stringify(guests));
-};
-
 const deepMerge = (target, source) => {
     const result = { ...target };
     for (const key of Object.keys(source)) {
@@ -407,7 +398,7 @@ const initTamu = () => {
     const statLink = document.getElementById('stat-link');
     const searchInput = document.getElementById('guest-search');
 
-    let guests = loadGuests();
+    let guests = [...(data.guests || [])];
 
     const render = (filter = '') => {
         const filtered = filter
@@ -461,7 +452,7 @@ const initTamu = () => {
             btn.addEventListener('click', () => {
                 const idx = parseInt(btn.dataset.index);
                 guests.splice(idx, 1);
-                saveGuests(guests);
+                saveWeddingData({ guests });
                 render(searchInput.value);
             });
         });
@@ -478,7 +469,7 @@ const initTamu = () => {
         }
 
         guests.push({ name, createdAt: new Date().toISOString() });
-        saveGuests(guests);
+        saveWeddingData({ guests });
         render(searchInput.value);
         nameInput.value = '';
         showToast(`Tamu "${name}" berhasil ditambahkan!`);
@@ -503,7 +494,7 @@ const initTamu = () => {
         names.forEach(name => {
             guests.push({ name, createdAt: new Date().toISOString() });
         });
-        saveGuests(guests);
+        saveWeddingData({ guests });
         render(searchInput.value);
         bulkTextarea.value = '';
         showToast(`${names.length} tamu berhasil ditambahkan!`);

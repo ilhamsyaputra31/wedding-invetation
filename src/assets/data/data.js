@@ -142,6 +142,8 @@ const defaultData = {
             path: '#wishas',
         },
     ],
+
+    guests: []
 };
 
 const savedData = JSON.parse(localStorage.getItem('wedding_data') || '{}');
