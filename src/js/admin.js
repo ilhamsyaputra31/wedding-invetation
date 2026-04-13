@@ -1,4 +1,4 @@
-import { data } from '../assets/data/data.js';
+import { data, db, ref, set } from '../assets/data/data.js';
 
 // ============================================
 // Admin Panel - Wedding Invitation
@@ -18,10 +18,21 @@ const loadWeddingData = () => {
     return saved ? JSON.parse(saved) : {};
 };
 
-const saveWeddingData = (newData) => {
+const saveWeddingData = async (newData) => {
     const current = loadWeddingData();
     const merged = deepMerge(current, newData);
+
+    // Simpan local
     localStorage.setItem(STORAGE_KEY, JSON.stringify(merged));
+
+    // Simpan Firebase
+    if (db) {
+        try {
+            await set(ref(db, 'wedding_data'), merged);
+        } catch (error) {
+            console.error('Error saving to Firebase', error);
+        }
+    }
 };
 
 const deepMerge = (target, source) => {

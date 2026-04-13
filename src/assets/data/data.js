@@ -146,5 +146,46 @@ const defaultData = {
     guests: []
 };
 
-const savedData = JSON.parse(localStorage.getItem('wedding_data') || '{}');
-export const data = deepMerge(defaultData, savedData);
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+import { getDatabase, ref, get, set } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+
+// TODO: User -> Ganti dengan konfigurasi Firebase Anda
+export const firebaseConfig = {
+    apiKey: "AIzaSyCS3Lt5UwbTJGeBWo-EO_sQDEuajDdYlaI",
+    authDomain: "wedding-invitation-740eb.firebaseapp.com",
+    databaseURL: "https://wedding-invitation-740eb-default-rtdb.firebaseio.com",
+    projectId: "wedding-invitation-740eb",
+    storageBucket: "wedding-invitation-740eb.firebasestorage.app",
+    messagingSenderId: "590507334176",
+    appId: "1:590507334176:web:6dbe19a2e77d65be633a45",
+    measurementId: "G-G45GFJ9JP7"
+};
+
+let firebaseDb = null;
+if (firebaseConfig.apiKey) {
+    const app = initializeApp(firebaseConfig);
+    firebaseDb = getDatabase(app);
+}
+
+const savedDataLocal = JSON.parse(localStorage.getItem('wedding_data') || '{}');
+let finalData = deepMerge(defaultData, savedDataLocal);
+
+if (firebaseDb) {
+    try {
+        const dbRef = ref(firebaseDb, 'wedding_data');
+        const snapshot = await get(dbRef);
+        if (snapshot.exists()) {
+            finalData = deepMerge(defaultData, snapshot.val());
+            localStorage.setItem('wedding_data', JSON.stringify(snapshot.val()));
+        } else {
+            // Seed DB with existing data for the first time
+            await set(dbRef, finalData);
+        }
+    } catch (e) {
+        console.error("Firebase Initialization Error:", e);
+    }
+}
+
+export const db = firebaseDb;
+export { ref, set, get };
+export const data = finalData;
