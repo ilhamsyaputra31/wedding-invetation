@@ -1,18 +1,37 @@
-export const data = {
+const deepMerge = (target, source) => {
+    const result = { ...target };
+    for (const key of Object.keys(source)) {
+        if (
+            source[key] &&
+            typeof source[key] === 'object' &&
+            !Array.isArray(source[key]) &&
+            target[key] &&
+            typeof target[key] === 'object' &&
+            !Array.isArray(target[key])
+        ) {
+            result[key] = deepMerge(target[key], source[key]);
+        } else {
+            result[key] = source[key];
+        }
+    }
+    return result;
+};
+
+const defaultData = {
     bride: {
         L: {
             id: 1,
-            name: 'Lorem Ipsum',
-            child: 'Putra ke lorem',
-            father: 'Lorem',
-            mother: 'Ipsum',
+            name: 'Muhammad Rusdi S.Ap',
+            child: 'Putra ke 3',
+            father: 'Junaidi Ismail',
+            mother: 'Yun',
             image: './src/assets/images/cowo.png'
         },
         P: {
             id: 2,
-            name: 'Ipsum Lorem',
-            child: 'Putri ke lorem',
-            father: 'Lorem',
+            name: 'Sarwesti Ayu',
+            child: 'Putri ke 2',
+            father: 'pak didi',
             mother: 'Ipsum',
             image: './src/assets/images/cewe.png'
         },
@@ -45,8 +64,8 @@ export const data = {
     },
 
     link: {
-        calendar: 'https://calendar.app.google/oSVLRMYC79GzuA4f9',
-        map: 'https://maps.app.goo.gl/q1Ask2Jgd4ekiiKBA',
+        calendar: 'https://calendar.google.com/calendar/event?action=TEMPLATE&tmeid=N2Uxc2g1cDJwdTNyYjJyZ2Ryc3M4bmYwOTUgaWxoYW1zeWFwdXRyYTk3MUBt&tmsrc=ilhamsyaputra971%40gmail.com',
+        map: 'https://maps.app.goo.gl/FxTt4JdGm2kaCf4y8',
     },
 
     galeri: [
@@ -123,4 +142,7 @@ export const data = {
             path: '#wishas',
         },
     ],
-}
+};
+
+const savedData = JSON.parse(localStorage.getItem('wedding_data') || '{}');
+export const data = deepMerge(defaultData, savedData);
