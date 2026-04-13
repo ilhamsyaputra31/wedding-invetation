@@ -628,9 +628,22 @@ body {
         font-size: 0.8rem;
     }
 
-    .guest-table th:nth-child(3),
-    .guest-table td:nth-child(3) {
-        display: none;
+    .guest-table th,
+    .guest-table td {
+        padding: 0.5rem 0.25rem;
+    }
+
+    .guest-actions {
+        gap: 0.25rem !important;
+    }
+
+    .guest-actions .btn {
+        padding: 0.3rem 0.5rem;
+        font-size: 0.7rem;
+    }
+
+    .guest-actions .btn i {
+        font-size: 1rem;
     }
 
     .stats-row {
