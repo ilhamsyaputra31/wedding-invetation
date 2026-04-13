@@ -21,11 +21,11 @@ const defaultData = {
     bride: {
         L: {
             id: 1,
-            name: 'Muhammad Rusdi S.Ap',
+            name: 'Muhammad Rusdi',
             child: 'Putra ke 3',
             father: 'Junaidi Ismail',
             mother: 'Yun',
-            image: './src/assets/images/cowo.png'
+            image: './src/assets/images/galeri-1.jpeg'
         },
         P: {
             id: 2,
@@ -33,10 +33,10 @@ const defaultData = {
             child: 'Putri ke 2',
             father: 'pak didi',
             mother: 'Ipsum',
-            image: './src/assets/images/cewe.png'
+            image: './src/assets/images/galeri-2.jpeg'
         },
 
-        couple: './src/assets/images/couple.png'
+        couple: './src/assets/images/galeri-3.jpeg'
     },
 
     time: {
@@ -69,26 +69,15 @@ const defaultData = {
     },
 
     galeri: [
-        {
-            id: 1,
-            image: './src/assets/images/1.png'
-        },
-        {
-            id: 2,
-            image: './src/assets/images/2.png'
-        },
-        {
-            id: 3,
-            image: './src/assets/images/3.png'
-        },
-        {
-            id: 4,
-            image: './src/assets/images/4.png'
-        },
-        {
-            id: 5,
-            image: './src/assets/images/5.png'
-        }
+        { id: 1, image: './src/assets/images/galeri-4.jpeg' },
+        { id: 2, image: './src/assets/images/galeri-5.jpeg' },
+        { id: 3, image: './src/assets/images/galeri-6.jpeg' },
+        { id: 4, image: './src/assets/images/galeri-7.jpeg' },
+        { id: 5, image: './src/assets/images/galeri-8.jpeg' },
+        { id: 6, image: './src/assets/images/galeri-9.jpeg' },
+        { id: 7, image: './src/assets/images/galeri-10.jpeg' },
+        { id: 8, image: './src/assets/images/galeri-11.jpeg' },
+        { id: 9, image: './src/assets/images/galeri-12.jpeg' }
     ],
 
     bank: [
@@ -168,23 +157,39 @@ if (firebaseConfig.apiKey) {
 }
 
 const savedDataLocal = JSON.parse(localStorage.getItem('wedding_data') || '{}');
+
+// Fix: Hapus path gambar lama (.png) agar path baru (.jpeg) bisa tampil
+if (savedDataLocal.bride) {
+    if (savedDataLocal.bride.L?.image?.endsWith('.png')) delete savedDataLocal.bride.L.image;
+    if (savedDataLocal.bride.P?.image?.endsWith('.png')) delete savedDataLocal.bride.P.image;
+    if (savedDataLocal.bride.couple?.endsWith('.png')) delete savedDataLocal.bride.couple;
+}
+if (savedDataLocal.galeri?.[0]?.image?.endsWith('.png')) delete savedDataLocal.galeri;
+
 let finalData = deepMerge(defaultData, savedDataLocal);
 
 if (firebaseDb) {
-    try {
-        const dbRef = ref(firebaseDb, 'wedding_data');
-        const snapshot = await get(dbRef);
+    const dbRef = ref(firebaseDb, 'wedding_data');
+    get(dbRef).then(snapshot => {
         if (snapshot.exists()) {
-            finalData = deepMerge(defaultData, snapshot.val());
-            localStorage.setItem('wedding_data', JSON.stringify(snapshot.val()));
+            const remoteData = snapshot.val();
+            // Juga bersihkan data remote jika mengandung .png
+            if (remoteData.bride) {
+                if (remoteData.bride.L?.image?.endsWith('.png')) delete remoteData.bride.L.image;
+                if (remoteData.bride.P?.image?.endsWith('.png')) delete remoteData.bride.P.image;
+                if (remoteData.bride.couple?.endsWith('.png')) delete remoteData.bride.couple;
+            }
+            if (remoteData.galeri?.[0]?.image?.endsWith('.png')) delete remoteData.galeri;
+
+            localStorage.setItem('wedding_data', JSON.stringify(remoteData));
         } else {
-            // Seed DB with existing data for the first time
-            await set(dbRef, finalData);
+            set(dbRef, finalData).catch(err => console.error("Firebase seed error:", err));
         }
-    } catch (e) {
-        console.error("Firebase Initialization Error:", e);
-    }
+    }).catch(e => {
+        console.error("Firebase fetch error:", e);
+    });
 }
+
 
 export const db = firebaseDb;
 export { ref, set, get };
