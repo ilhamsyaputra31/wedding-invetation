@@ -624,26 +624,106 @@ body {
         grid-template-columns: 1fr;
     }
 
-    .guest-table {
-        font-size: 0.8rem;
-    }
-
+    /* Mobile Card Layout for Guest Table */
+    .guest-table,
+    .guest-table thead,
+    .guest-table tbody,
+    .guest-table tr,
     .guest-table th,
     .guest-table td {
-        padding: 0.5rem 0.25rem;
+        display: block;
+        width: 100%;
+    }
+
+    .guest-table thead {
+        display: none;
+    }
+
+    .guest-table tr {
+        background: var(--admin-surface-2);
+        border: 1px solid var(--admin-border);
+        border-radius: var(--admin-radius);
+        margin-bottom: 1.25rem;
+        padding: 1.25rem;
+        position: relative;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        border-left: 4px solid var(--admin-primary);
+    }
+
+    .guest-table td {
+        border-bottom: none;
+        padding: 0.5rem 0;
+        font-size: 0.9rem;
+    }
+
+    .guest-table td:first-child {
+        font-size: 1.15rem;
+        color: var(--admin-primary);
+        font-weight: 700;
+        border-bottom: 1px solid var(--admin-border);
+        margin-bottom: 0.75rem;
+        padding-bottom: 0.75rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .guest-table td:first-child::before {
+        content: '\eb0c';
+        /* bx-user icon */
+        font-family: 'boxicons';
+        font-size: 1.2rem;
+        color: var(--admin-text-muted);
+    }
+
+    .guest-table td:nth-child(2) {
+        color: var(--admin-text-muted);
+        margin-bottom: 1rem;
+    }
+
+    .guest-table td:nth-child(2)::before {
+        content: 'Link Undangan';
+        display: block;
+        font-size: 0.7rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.4rem;
+        font-weight: 600;
+    }
+
+    .guest-link {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        background: rgba(0, 0, 0, 0.2);
+        padding: 0.6rem 0.8rem;
+        border-radius: var(--admin-radius-sm);
+        border: 1px solid var(--admin-border);
+        font-size: 0.8rem;
+        color: var(--admin-accent);
     }
 
     .guest-actions {
-        gap: 0.25rem !important;
+        display: grid !important;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem !important;
+        margin-top: 0.5rem;
     }
 
     .guest-actions .btn {
-        padding: 0.3rem 0.5rem;
-        font-size: 0.7rem;
+        width: 100%;
+        justify-content: center;
+        padding: 0.7rem !important;
+        font-size: 0.85rem !important;
+        border-radius: var(--admin-radius-sm) !important;
     }
 
-    .guest-actions .btn i {
-        font-size: 1rem;
+    .btn-delete-row {
+        grid-column: span 2;
+        margin-top: 0.25rem;
+        background: rgba(248, 113, 113, 0.05) !important;
+        border: 1px dashed rgba(248, 113, 113, 0.2) !important;
     }
 
     .stats-row {

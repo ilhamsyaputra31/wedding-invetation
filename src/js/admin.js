@@ -445,8 +445,8 @@ const initTamu = () => {
                             <a href="${waLink}" target="_blank" class="btn btn-whatsapp btn-sm">
                                 <i class='bx bxl-whatsapp'></i> Kirim
                             </a>
-                            <button class="btn btn-danger btn-sm btn-delete" data-index="${index}">
-                                <i class='bx bx-trash'></i>
+                            <button class="btn btn-danger btn-sm btn-delete btn-delete-row" data-index="${index}">
+                                <i class='bx bx-trash'></i> Hapus Tamu
                             </button>
                         </div>
                     </td>
