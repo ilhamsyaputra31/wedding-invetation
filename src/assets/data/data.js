@@ -25,7 +25,7 @@ const defaultData = {
             child: 'Putra ke 3',
             father: 'Junaidi Ismail',
             mother: 'Yun',
-            image: './src/assets/images/galeri-1.jpeg'
+            image: './src/assets/images/cowo.jpeg'
         },
         P: {
             id: 2,
@@ -33,10 +33,10 @@ const defaultData = {
             child: 'Putri ke 2',
             father: 'pak didi',
             mother: 'Ipsum',
-            image: './src/assets/images/galeri-2.jpeg'
+            image: './src/assets/images/cewe.jpeg'
         },
 
-        couple: './src/assets/images/galeri-3.jpeg'
+        couple: './src/assets/images/galeri-1.jpeg'
     },
 
     time: {
@@ -95,7 +95,7 @@ const defaultData = {
         },
     ],
 
-    audio: './src/assets/audio/teman-hidup.mp3',
+    audio: './src/assets/audio/Tulus-TemanHidup.mp3',
 
     api: 'https://script.google.com/macros/s/AKfycbyydz6N4p2VWUG8zsXeURv6ap9RP8a4eC3x6N3x6qTDjMVr1cIBz9S0NsHw2rWvBOSXGg/exec',
 
