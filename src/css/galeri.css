@@ -15,7 +15,8 @@
     position: relative;
 }
 
-.galeri .container h2, .galeri div:nth-of-type(2) h2 {
+.galeri .container h2,
+.galeri div:nth-of-type(2) h2 {
     font-family: var(--sacramento);
     font-size: var(--fontSize-heading-base);
     font-weight: 400;
@@ -42,7 +43,12 @@
     height: 35rem;
     object-fit: cover;
     border-radius: 15px;
-    transition: var(--transition-small);
+    transition: opacity 0.4s ease-in-out, transform 0.4s ease-in-out;
+}
+
+.galeri .container figure img.fade-out {
+    opacity: 0;
+    transform: scale(0.98);
 }
 
 .galeri .container ul {
@@ -66,7 +72,8 @@
     cursor: pointer;
 }
 
-.galeri .container ul li:hover, .galeri .container ul li.active {
+.galeri .container ul li:hover,
+.galeri .container ul li.active {
     background-color: #fff;
 }
 
@@ -127,7 +134,7 @@
     transform-origin: bottom;
 }
 
-.galeri div:nth-of-type(2) > div {
+.galeri div:nth-of-type(2)>div {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 -1px 1px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
     padding: 2rem;
@@ -137,16 +144,16 @@
     gap: 2rem;
 }
 
-.galeri div:nth-of-type(2) > div img {
+.galeri div:nth-of-type(2)>div img {
     width: 100%;
     object-fit: cover;
     border-radius: 20px;
 }
 
 .galeri div:nth-of-type(2) button {
-    padding:0;
+    padding: 0;
     font-size: 2rem;
-    background:none;
+    background: none;
     border: none;
     cursor: pointer;
     position: absolute;
@@ -156,7 +163,7 @@
 }
 
 .galeri div:nth-of-type(2) button:hover i {
-    text-shadow: 1px 2px 5px rgba(0,0,0,0.5);
+    text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
 .galeri div:nth-of-type(2).active {
@@ -164,7 +171,7 @@
     opacity: 1;
 }
 
-.galeri > i {
-    top:2rem;
+.galeri>i {
+    top: 2rem;
     left: 10rem;
 }

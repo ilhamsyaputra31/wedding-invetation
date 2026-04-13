@@ -1,4 +1,4 @@
-import {data} from "../assets/data/data.js";
+import { data } from "../assets/data/data.js";
 
 export const galeri = () => {
     const galeriElement = document.querySelector('.galeri');
@@ -20,13 +20,21 @@ export const galeri = () => {
 
     const updateGalleryImage = (id) => {
         const selectedImage = data.galeri.find(item => item.id === id);
+        const img = figureElement.querySelector('img');
 
-        if (selectedImage) {
-            figureElement.innerHTML = `<img src="${selectedImage.image}" alt="galeri image" id="${selectedImage.id}">`;
+        if (selectedImage && img) {
+            // Animasi transisi
+            img.classList.add('fade-out');
 
-            paginationElement.querySelectorAll('li').forEach((li) => {
-                li.classList.toggle('active', parseInt(li.dataset.id) === id);
-            });
+            setTimeout(() => {
+                img.src = selectedImage.image;
+                img.id = selectedImage.id;
+                img.classList.remove('fade-out');
+
+                paginationElement.querySelectorAll('li').forEach((li) => {
+                    li.classList.toggle('active', parseInt(li.dataset.id) === id);
+                });
+            }, 400); // 400ms sesuai durasi di CSS
         }
     };
 
